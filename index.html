@@ -132,6 +132,27 @@
             box-shadow: var(--shadow-elevated);
         }
 
+        /* ── BREADCRUMB ── */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb button {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+        }
+        .breadcrumb button:hover { color: var(--accent-soft); }
+        .breadcrumb span { color: var(--text-secondary); }
+
         /* ── FILTERS ── */
         .filter-header {
             display: flex;
@@ -226,6 +247,7 @@
             display: flex;
             flex-direction: column;
             transition: box-shadow 0.2s, border-color 0.2s;
+            cursor: pointer;
         }
         .document-card:hover {
             border-color: #c0c0c0;
@@ -363,10 +385,11 @@
             color: #666;
         }
         .modal-close:hover { color: #000; }
-        .modal-iframe {
+        .modal-viewer {
             width: 100%;
             height: 70vh;
             border: none;
+            overflow: auto;
         }
         .modal-actions {
             padding: 14px 24px;
@@ -492,7 +515,13 @@
         </header>
 
         <div class="main-body">
-            <div class="filter-header">
+            <div class="breadcrumb" id="breadcrumb" style="display: none;">
+                <button id="backToBrowse"><i class="fas fa-arrow-left"></i> Back to Browse</button>
+                <span>/</span>
+                <span id="currentFolderName"></span>
+            </div>
+
+            <div class="filter-header" id="filterSection">
                 <h2>Browse Documents</h2>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Search by title or description...">
@@ -536,7 +565,7 @@
                 <span id="modalTitle">Document Preview</span>
                 <button class="modal-close" id="closeModal">&times;</button>
             </div>
-            <iframe class="modal-iframe" id="pdfIframe" src="" allowfullscreen></iframe>
+            <div class="modal-viewer" id="pdfViewer"></div>
             <div class="modal-actions">
                 <button class="btn btn-outline" id="modalDownloadBtn"><i class="fas fa-download"></i> Download</button>
                 <button class="btn btn-primary" id="modalCloseBtn">Close</button>
@@ -549,36 +578,42 @@
     <script>
         (function() {
             const documents = [
-                { id: 1, title: 'Curriculum Vitae', fileName: 'CV.pdf', category: 'root', description: 'Professional curriculum vitae.', icon: 'fa-id-card', fileSize: '80 KB', path: 'CV.pdf', type: 'document' },
-                { id: 2, title: 'Admission Documents', fileName: 'Admission_Docs_Merged.pdf', category: 'root', description: 'University admission documents.', icon: 'fa-envelope-open', fileSize: '5.9 MB', path: 'Admission_Docs_Merged.pdf', type: 'document' },
-                { id: 3, title: 'National ID Card', fileName: 'CNIC ID Card.pdf', category: 'root', description: 'National ID card.', icon: 'fa-credit-card', fileSize: '1.9 MB', path: 'CNIC%20ID%20Card.pdf', type: 'document' },
-                { id: 4, title: 'Domicile Certificate', fileName: 'Domicile Saad.pdf', category: 'root', description: 'Domicile certificate.', icon: 'fa-certificate', fileSize: '567 KB', path: 'Domicile%20Saad.pdf', type: 'document' },
-                { id: 5, title: 'IELTS Test Results', fileName: 'IELTS Result.pdf', category: 'root', description: 'IELTS result.', icon: 'fa-language', fileSize: '1 MB', path: 'IELTS%20Result.pdf', type: 'document' },
-                { id: 6, title: 'PTE Test Results', fileName: 'PTE Result.pdf', category: 'root', description: 'PTE result.', icon: 'fa-globe', fileSize: '1.4 MB', path: 'PTE%20Result.pdf', type: 'document' },
-                { id: 7, title: 'International Passport', fileName: 'Passport.pdf', category: 'root', description: 'International passport.', icon: 'fa-passport', fileSize: '729 KB', path: 'Passport.pdf', type: 'document' },
-                { id: 8, title: 'Professional Certifications', fileName: 'Certifications', category: 'certifications', description: 'Collection of professional certifications.', icon: 'fa-trophy', fileSize: 'Folder', path: 'Certifications', type: 'folder' },
-                { id: 9, title: 'FAST NUCES Records', fileName: 'FAST NUCES', category: 'university', description: 'University documents from FAST NUCES.', icon: 'fa-graduation-cap', fileSize: 'Folder', path: 'FAST%20NUCES', type: 'folder' },
-                { id: 10, title: 'HSSC Documents', fileName: 'HSSC Docs', category: 'education', description: 'Higher Secondary School Certificate.', icon: 'fa-book-open', fileSize: 'Folder', path: 'HSSC%20Docs', type: 'folder' },
-                { id: 11, title: 'SSC Documents', fileName: 'SSC Docs', category: 'education', description: 'Secondary School Certificate.', icon: 'fa-book', fileSize: 'Folder', path: 'SSC%20Docs', type: 'folder' },
-                { id: 12, title: 'Work Contracts', fileName: 'Work Contracts', category: 'work', description: 'Employment contracts.', icon: 'fa-file-contract', fileSize: 'Folder', path: 'Work%20Contracts', type: 'folder' }
+                { id: 1, title: 'Curriculum Vitae', fileName: 'CV.pdf', category: 'root', description: 'Professional curriculum vitae highlighting your skills and experience.', icon: 'fa-id-card', fileSize: '80 KB', path: 'CV.pdf', type: 'document' },
+                { id: 2, title: 'Admission Documents', fileName: 'Admission_Docs_Merged.pdf', category: 'root', description: 'University admission documents and acceptance letters.', icon: 'fa-envelope-open', fileSize: '5.9 MB', path: 'Admission_Docs_Merged.pdf', type: 'document' },
+                { id: 3, title: 'National ID Card', fileName: 'CNIC ID Card.pdf', category: 'root', description: 'National ID card for official identification.', icon: 'fa-credit-card', fileSize: '1.9 MB', path: 'CNIC%20ID%20Card.pdf', type: 'document' },
+                { id: 4, title: 'Domicile Certificate', fileName: 'Domicile Saad.pdf', category: 'root', description: 'Domicile certificate for educational purposes.', icon: 'fa-certificate', fileSize: '567 KB', path: 'Domicile%20Saad.pdf', type: 'document' },
+                { id: 5, title: 'IELTS Test Results', fileName: 'IELTS Result.pdf', category: 'root', description: 'English language proficiency certification (IELTS).', icon: 'fa-language', fileSize: '1 MB', path: 'IELTS%20Result.pdf', type: 'document' },
+                { id: 6, title: 'PTE Test Results', fileName: 'PTE Result.pdf', category: 'root', description: 'English language proficiency certification (PTE).', icon: 'fa-globe', fileSize: '1.4 MB', path: 'PTE%20Result.pdf', type: 'document' },
+                { id: 7, title: 'International Passport', fileName: 'Passport.pdf', category: 'root', description: 'International travel passport for visa and immigration.', icon: 'fa-passport', fileSize: '729 KB', path: 'Passport.pdf', type: 'document' },
+                { id: 8, title: 'Professional Certifications', fileName: 'Certifications', category: 'certifications', description: 'Collection of professional certifications and achievement credentials.', icon: 'fa-trophy', fileSize: 'Folder', path: 'Certifications', type: 'folder' },
+                { id: 9, title: 'FAST NUCES Records', fileName: 'FAST NUCES', category: 'university', description: 'University documents and official transcripts from FAST NUCES.', icon: 'fa-graduation-cap', fileSize: 'Folder', path: 'FAST%20NUCES', type: 'folder' },
+                { id: 10, title: 'HSSC Documents', fileName: 'HSSC Docs', category: 'education', description: 'Higher Secondary School Certificate documents and records.', icon: 'fa-book-open', fileSize: 'Folder', path: 'HSSC%20Docs', type: 'folder' },
+                { id: 11, title: 'SSC Documents', fileName: 'SSC Docs', category: 'education', description: 'Secondary School Certificate documents and academic records.', icon: 'fa-book', fileSize: 'Folder', path: 'SSC%20Docs', type: 'folder' },
+                { id: 12, title: 'Work Contracts', fileName: 'Work Contracts', category: 'work', description: 'Employment contracts and professional work agreements.', icon: 'fa-file-contract', fileSize: 'Folder', path: 'Work%20Contracts', type: 'folder' }
             ];
 
             const rawGitHubURL = 'https://raw.githubusercontent.com/SaadARazzaq/Career-Documents/main/';
+            const githubAPIURL = 'https://api.github.com/repos/SaadARazzaq/Career-Documents/contents/';
             const githubRepoURL = 'https://github.com/SaadARazzaq/Career-Documents/blob/main/';
 
             let currentCategory = 'all';
             let searchTerm = '';
+            let currentFolder = null;
+            let folderContents = {};
 
             const grid = document.getElementById('documentsGrid');
             const categoryTabs = document.querySelectorAll('#categoryTabs .category-tab');
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
             const backToTop = document.getElementById('backToTop');
+            const filterSection = document.getElementById('filterSection');
+            const breadcrumb = document.getElementById('breadcrumb');
+            const backToBrowseBtn = document.getElementById('backToBrowse');
 
             // Modal elements
             const modal = document.getElementById('pdfModal');
             const modalTitle = document.getElementById('modalTitle');
-            const pdfIframe = document.getElementById('pdfIframe');
+            const pdfViewer = document.getElementById('pdfViewer');
             const closeModalBtn = document.getElementById('closeModal');
             const modalCloseBtn = document.getElementById('modalCloseBtn');
             const modalDownloadBtn = document.getElementById('modalDownloadBtn');
@@ -601,7 +636,7 @@
                 }
 
                 grid.innerHTML = filtered.map(doc => `
-                    <div class="document-card">
+                    <div class="document-card" data-folder="${doc.path}">
                         <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
                         <div class="card-content">
                             <span class="card-category">${doc.category === 'root' ? 'Root Documents' : doc.category}</span>
@@ -622,56 +657,163 @@
                         </div>
                     </div>
                 `).join('');
+
+                // Attach event listeners
+                attachCardListeners();
             }
 
-            // ── VIEW: opens inline for PDFs, GitHub folder for folders ──
-            function viewDocument(path, type, title) {
-                if (type === 'folder') {
-                    // Show the folder contents on GitHub
-                    window.open(githubRepoURL + path, '_blank', 'noopener,noreferrer');
-                    return;
-                }
-                // PDF: display directly in iframe using browser's built-in viewer
+            function attachCardListeners() {
+                grid.addEventListener('click', (e) => {
+                    const viewBtn = e.target.closest('.view-btn');
+                    if (viewBtn) {
+                        e.preventDefault();
+                        const type = viewBtn.dataset.type;
+                        const path = viewBtn.dataset.path;
+                        const title = viewBtn.dataset.title;
+                        if (type === 'folder') {
+                            openFolder(path, title);
+                        } else {
+                            viewDocument(path, title);
+                        }
+                        return;
+                    }
+                    const downloadBtn = e.target.closest('.download-btn');
+                    if (downloadBtn) {
+                        e.preventDefault();
+                        downloadDocument(downloadBtn.dataset.path, downloadBtn.dataset.type, downloadBtn.dataset.file);
+                    }
+                });
+            }
+
+            // ── OPEN FOLDER: Fetch contents from GitHub API ──
+            function openFolder(folderPath, folderName) {
+                currentFolder = { path: folderPath, name: folderName };
+                
+                // Show breadcrumb
+                filterSection.style.display = 'none';
+                document.getElementById('categoryTabs').style.display = 'none';
+                breadcrumb.style.display = 'flex';
+                document.getElementById('currentFolderName').textContent = folderName;
+
+                // Fetch folder contents from GitHub API
+                const apiUrl = githubAPIURL + folderPath;
+                
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch folder');
+                        return response.json();
+                    })
+                    .then(items => {
+                        // Filter only PDF files
+                        const pdfFiles = items.filter(item => item.type === 'file' && item.name.endsWith('.pdf'));
+                        
+                        if (!pdfFiles.length) {
+                            grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">
+                                <i class="fas fa-folder-open"></i>
+                                <p>No PDF documents found in this folder.</p>
+                            </div>`;
+                            return;
+                        }
+
+                        // Render PDF files
+                        grid.innerHTML = pdfFiles.map((file, index) => `
+                            <div class="document-card">
+                                <div class="card-icon"><i class="fas fa-file-pdf"></i></div>
+                                <div class="card-content">
+                                    <span class="card-category">${folderName}</span>
+                                    <h3 class="card-title">${file.name}</h3>
+                                    <p class="card-description">Document from ${folderName}</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-hdd"></i> ${(file.size / 1024).toFixed(1)} KB</span>
+                                        <span><i class="far fa-file-pdf"></i> PDF</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="btn btn-primary" onclick="window.app.viewFolderDocument('${folderPath}', '${file.name}', '${file.name}')">
+                                            <i class="fas fa-eye"></i> View
+                                        </button>
+                                        <button class="btn btn-outline" onclick="window.app.downloadFolderDocument('${folderPath}', '${file.name}')">
+                                            <i class="fas fa-download"></i> Download
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching folder:', error);
+                        grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Error loading folder contents.</p>
+                        </div>`;
+                    });
+            }
+
+            // ── VIEW PDF DOCUMENT ──
+            function viewDocument(path, title) {
                 const rawUrl = rawGitHubURL + path;
                 modalTitle.textContent = title || 'Document Preview';
-                pdfIframe.src = rawUrl;   // native PDF view, no download
-                currentModalDoc = { path, fileName: title, type, rawUrl };
+                
+                // Use PDF viewer embed
+                pdfViewer.innerHTML = `
+                    <embed src="${rawUrl}#toolbar=0" type="application/pdf" width="100%" height="100%" />
+                `;
+                
+                currentModalDoc = { path, fileName: title, type: 'document', rawUrl };
+                modal.classList.add('active');
+            }
+
+            // ── VIEW FOLDER DOCUMENT ──
+            function viewFolderDocument(folderPath, fileName, displayName) {
+                const fullPath = folderPath + '/' + fileName;
+                const rawUrl = rawGitHubURL + fullPath;
+                modalTitle.textContent = displayName || fileName;
+                
+                // Use PDF viewer embed
+                pdfViewer.innerHTML = `
+                    <embed src="${rawUrl}#toolbar=0" type="application/pdf" width="100%" height="100%" />
+                `;
+                
+                currentModalDoc = { path: fullPath, fileName: displayName, type: 'document', rawUrl };
                 modal.classList.add('active');
             }
 
             function downloadDocument(path, type, fileName) {
-                if (type === 'folder') {
-                    window.open(githubRepoURL + path, '_blank', 'noopener,noreferrer');
-                } else {
-                    const a = document.createElement('a');
-                    a.href = rawGitHubURL + path;
-                    a.download = fileName;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }
+                const fullUrl = rawGitHubURL + path;
+                const a = document.createElement('a');
+                a.href = fullUrl;
+                a.download = fileName;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+
+            function downloadFolderDocument(folderPath, fileName) {
+                const fullPath = folderPath + '/' + fileName;
+                downloadDocument(fullPath, 'document', fileName);
             }
 
             function closeModal() {
                 modal.classList.remove('active');
-                pdfIframe.src = '';
+                pdfViewer.innerHTML = '';
                 currentModalDoc = null;
             }
 
-            // Event delegation
-            grid.addEventListener('click', (e) => {
-                const viewBtn = e.target.closest('.view-btn');
-                if (viewBtn) {
-                    viewDocument(viewBtn.dataset.path, viewBtn.dataset.type, viewBtn.dataset.title);
-                    return;
-                }
-                const downloadBtn = e.target.closest('.download-btn');
-                if (downloadBtn) {
-                    downloadDocument(downloadBtn.dataset.path, downloadBtn.dataset.type, downloadBtn.dataset.file);
-                }
-            });
+            function backToBrowse() {
+                currentFolder = null;
+                filterSection.style.display = 'flex';
+                document.getElementById('categoryTabs').style.display = 'flex';
+                breadcrumb.style.display = 'none';
+                renderDocuments();
+            }
+
+            // Expose functions globally for inline onclick handlers
+            window.app = {
+                viewFolderDocument,
+                downloadFolderDocument,
+                backToBrowse
+            };
 
             // Category tabs
             categoryTabs.forEach(tab => {
@@ -691,12 +833,15 @@
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') performSearch();
-                else performSearch(); // live search
+                else performSearch();
             });
             document.addEventListener('search', () => {
                 searchTerm = searchInput.value.trim();
                 renderDocuments();
             });
+
+            // Back to browse
+            backToBrowseBtn.addEventListener('click', backToBrowse);
 
             // Back to top
             window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 400));
