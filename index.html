@@ -5,544 +5,441 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Career Documents Portfolio - View and download all professional documents">
     <meta name="author" content="Saad A Razzaq">
-    <title>Career Documents Portfolio - Saad A Razzaq</title>
+    <title>Career Documents Portfolio — Saad A Razzaq</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #ec4899;
-            --dark-bg: #0f172a;
-            --dark-card: #1e293b;
-            --dark-border: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-tertiary: #94a3b8;
-            --success-color: #10b981;
-            --info-color: #3b82f6;
-            --warning-color: #f59e0b;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg: #f0f2f5;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent: #0f172a;
+            --accent-soft: #1e293b;
+            --gold: #b68b40;
+            --gold-light: #f5efe5;
+            --border: #e5e5e5;
+            --table-stripe: #f9fafb;
+            --code-bg: #f1f5f9;
+            --radius: 12px;
+            --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 8px rgba(0,0,0,0.04);
+            --shadow-elevated: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1f3a 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-color);
-        }
-
-        /* Navigation */
-        .navbar {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--dark-border);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 30px rgba(99, 102, 241, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
+            padding: 40px 20px 60px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .nav-brand {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .portfolio-wrapper {
+            max-width: 1100px;
+            width: 100%;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 32px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .nav-links .active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 0.25rem;
-        }
-
-        /* Hero Section */
+        /* ── HERO ── */
         .hero {
-            padding: 6rem 2rem;
-            text-align: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            background: var(--accent);
+            color: #ffffff;
+            padding: 48px 52px 40px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -80px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+            pointer-events: none;
+        }
+        .hero .label-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 14px;
             border-radius: 20px;
-            margin: 2rem auto;
-            border: 1px solid var(--dark-border);
+            margin-bottom: 22px;
         }
-
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            letter-spacing: -1px;
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
         }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .hero .subtitle {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
         }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        .hero-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-top: 28px;
+            position: relative;
+            z-index: 1;
         }
-
-        .stat-item {
-            padding: 1.5rem;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 12px;
-            transition: var(--transition);
+        .hero-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        .meta-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: rgba(255,255,255,0.55);
+            font-weight: 600;
         }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-tertiary);
+        .meta-value {
             font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.92);
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        /* ── MAIN CONTENT ── */
+        .main-body {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 44px 52px 52px;
+            box-shadow: var(--shadow-elevated);
         }
 
-        /* Filter Section */
-        .filter-section {
-            margin: 3rem 0;
-            padding: 2rem;
-            background: var(--dark-card);
-            border-radius: 15px;
-            border: 1px solid var(--dark-border);
-        }
-
+        /* ── FILTERS ── */
         .filter-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 16px;
+            margin-bottom: 24px;
         }
-
-        .filter-title {
+        .filter-header h2 {
+            font-family: var(--font-serif);
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 400;
+            color: var(--accent);
         }
-
         .search-box {
             display: flex;
             gap: 0.5rem;
             flex: 1;
             min-width: 250px;
-            max-width: 400px;
+            max-width: 380px;
         }
-
         .search-box input {
             flex: 1;
-            padding: 0.75rem 1rem;
-            background: var(--dark-bg);
-            border: 1px solid var(--dark-border);
+            padding: 10px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            color: var(--text-primary);
-            transition: var(--transition);
-            font-size: 0.95rem;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--text);
+            transition: border 0.2s;
         }
-
         .search-box input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: var(--accent-soft);
+            box-shadow: 0 0 0 3px rgba(15,23,42,0.08);
         }
-
-        .search-box button {
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .search-btn {
+            padding: 10px 18px;
+            background: var(--accent);
             border: none;
             border-radius: 8px;
             color: white;
             cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 6px;
         }
+        .search-btn:hover { background: var(--accent-soft); }
 
-        .search-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Category Tabs */
         .category-tabs {
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--dark-border);
+            gap: 10px;
+            margin-top: 16px;
         }
-
         .category-tab {
-            padding: 0.75rem 1.5rem;
+            padding: 8px 18px;
             background: transparent;
-            border: 1px solid var(--dark-border);
-            border-radius: 25px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 500;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.95rem;
-            font-weight: 500;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
-
-        .category-tab:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
+        .category-tab:hover { border-color: var(--accent-soft); color: var(--accent); }
         .category-tab.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
         }
 
-        /* Documents Grid */
+        /* ── DOCUMENT GRID ── */
         .documents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
+            gap: 24px;
+            margin-top: 32px;
         }
-
-        /* Document Card */
         .document-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: var(--transition);
+            background: #fafbfc;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            cursor: pointer;
+            transition: box-shadow 0.2s, border-color 0.2s;
         }
-
         .document-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+            border-color: #c0c0c0;
+            box-shadow: var(--shadow-elevated);
         }
-
-        .document-icon {
-            height: 150px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .card-icon {
+            width: 48px; height: 48px;
+            background: var(--gold-light);
+            color: var(--gold);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3.5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
         }
-
-        .document-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
-        }
-
-        .document-content {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .document-category {
-            display: inline-block;
-            padding: 0.35rem 0.85rem;
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--primary-color);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .card-content { flex: 1; display: flex; flex-direction: column; }
+        .card-category {
+            font-size: 0.7rem;
             text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            width: fit-content;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 6px;
         }
-
-        .document-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent-soft);
+            margin-bottom: 6px;
+            line-height: 1.3;
         }
-
-        .document-description {
-            font-size: 0.9rem;
+        .card-description {
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 14px;
             flex: 1;
         }
-
-        .document-meta {
+        .card-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--dark-border);
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
         }
-
-        .file-size {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .document-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .btn-action {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
+        .card-actions { display: flex; gap: 10px; }
+        .btn {
+            padding: 10px 18px;
             border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            font-size: 0.9rem;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            gap: 6px;
+            border: 1px solid transparent;
+            font-family: var(--font-sans);
         }
-
-        .btn-view {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .btn-primary {
+            background: var(--accent);
             color: white;
+            border-color: var(--accent);
         }
-
-        .btn-view:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-download {
-            background: rgba(99, 102, 241, 0.15);
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-        }
-
-        .btn-download:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
+        .btn-primary:hover { background: var(--accent-soft); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
             color: var(--text-secondary);
         }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--text-tertiary);
-            margin-bottom: 1rem;
-            opacity: 0.5;
+        .btn-outline:hover {
+            border-color: var(--accent-soft);
+            color: var(--accent);
+            background: rgba(15,23,42,0.03);
         }
 
-        .empty-state p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 5rem;
-            padding: 3rem 2rem;
-            background: var(--dark-card);
-            border-top: 1px solid var(--dark-border);
+        .empty-state {
+            grid-column: 1/-1;
             text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-state i { font-size: 3rem; color: #ccc; opacity: 0.6; margin-bottom: 12px; }
+        .clear-search-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* ── MODAL (PDF VIEWER) ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
         }
-
-        .footer-title {
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--accent-soft);
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            cursor: pointer;
+            color: #666;
+        }
+        .modal-close:hover { color: #000; }
+        .modal-iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+        }
+        .modal-actions {
+            padding: 14px 24px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
         }
 
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 32px 40px;
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .footer-title {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 24px;
             flex-wrap: wrap;
+            margin: 16px 0;
         }
-
-        .footer-link {
+        .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            transition: var(--transition);
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 6px;
         }
-
-        .footer-link:hover {
-            color: var(--primary-color);
-        }
-
+        .footer-links a:hover { color: var(--accent); }
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 16px;
+            margin-bottom: 16px;
         }
-
         .social-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px; height: 36px;
             border-radius: 50%;
-            background: rgba(99, 102, 241, 0.15);
+            background: var(--bg);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-color);
-            transition: var(--transition);
+            color: var(--text-secondary);
+            transition: all 0.2s;
             text-decoration: none;
         }
-
-        .social-icon:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-5px);
-        }
-
+        .social-icon:hover { background: var(--accent); color: white; }
         .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid var(--dark-border);
-            color: var(--text-tertiary);
-            font-size: 0.9rem;
+            font-size: 0.78rem;
+            color: #999;
+            margin-top: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
         }
 
-        /* Back to Top Button */
         .back-to-top {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            bottom: 28px;
+            right: 28px;
+            width: 44px; height: 44px;
+            background: var(--accent);
             color: white;
             border: none;
             border-radius: 50%;
@@ -550,530 +447,272 @@
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            transition: var(--transition);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 99;
+            font-size: 1.2rem;
         }
+        .back-to-top.show { display: flex; }
+        .back-to-top:hover { background: var(--accent-soft); transform: translateY(-2px); }
 
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
-        }
-
-        .back-to-top.show {
-            display: flex;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .documents-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .filter-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .category-tabs {
-                gap: 0.5rem;
-            }
-
-            .category-tab {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-brand {
-                font-size: 1.3rem;
-            }
-
-            .nav-links {
-                gap: 0.5rem;
-                font-size: 0.8rem;
-            }
-
-            .hero {
-                padding: 3rem 1rem;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .document-title {
-                font-size: 1.1rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .back-to-top {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-                bottom: 1rem;
-                right: 1rem;
-            }
-        }
-
-        /* Loading Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .document-card {
-            animation: fadeIn 0.5s ease-out forwards;
+            body { padding: 20px 12px 40px; }
+            .hero { padding: 32px 24px 28px; }
+            .hero h1 { font-size: 1.6rem; }
+            .main-body { padding: 28px 20px 32px; }
+            .filter-header { flex-direction: column; align-items: flex-start; }
+            .search-box { width: 100%; max-width: 100%; }
+            .documents-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <i class="fas fa-briefcase"></i>
-                Career Docs
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#documents">Documents</a></li>
-                <li><a href="#footer">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero" id="home">
-        <h1><i class="fas fa-file-download"></i> Career Documents Portfolio</h1>
-        <p>Welcome to my comprehensive career documents collection. Browse, search, and download all my professional certifications, educational records, and credentials in one place.</p>
-        
-        <div class="hero-stats">
-            <div class="stat-item">
-                <div class="stat-number">12</div>
-                <div class="stat-label">Total Documents</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">5</div>
-                <div class="stat-label">Categories</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">11 MB</div>
-                <div class="stat-label">Total Size</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Verified</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container" id="documents">
-        <!-- Filter Section -->
-        <div class="filter-section">
-            <div class="filter-header">
-                <h2 class="filter-title"><i class="fas fa-filter"></i> Documents</h2>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search documents...">
-                    <button id="searchBtn" title="Search"><i class="fas fa-search"></i></button>
+    <div class="portfolio-wrapper">
+        <header class="hero">
+            <span class="label-tag">Career Documents</span>
+            <h1>Saad A Razzaq</h1>
+            <p class="subtitle">Professional Certifications, Education & Credentials</p>
+            <div class="hero-meta-row">
+                <div class="hero-meta-item">
+                    <span class="meta-label">Documents</span>
+                    <span class="meta-value">12</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="meta-label">Categories</span>
+                    <span class="meta-value">5</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="meta-label">Total Size</span>
+                    <span class="meta-value">~11 MB</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-value">Verified</span>
                 </div>
             </div>
+        </header>
 
-            <!-- Category Tabs -->
-            <div class="category-tabs">
-                <button class="category-tab active" data-category="all">
-                    <i class="fas fa-th"></i> All Documents
-                </button>
-                <button class="category-tab" data-category="root">
-                    <i class="fas fa-file"></i> Root Documents
-                </button>
-                <button class="category-tab" data-category="certifications">
-                    <i class="fas fa-certificate"></i> Certifications
-                </button>
-                <button class="category-tab" data-category="university">
-                    <i class="fas fa-graduation-cap"></i> University
-                </button>
-                <button class="category-tab" data-category="education">
-                    <i class="fas fa-book"></i> Education
-                </button>
-                <button class="category-tab" data-category="work">
-                    <i class="fas fa-briefcase"></i> Work
-                </button>
+        <div class="main-body">
+            <div class="filter-header">
+                <h2>Browse Documents</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by title or description...">
+                    <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i> Search</button>
+                </div>
             </div>
+            <div class="category-tabs" id="categoryTabs">
+                <button class="category-tab active" data-category="all">All</button>
+                <button class="category-tab" data-category="root">Root Docs</button>
+                <button class="category-tab" data-category="certifications">Certifications</button>
+                <button class="category-tab" data-category="university">University</button>
+                <button class="category-tab" data-category="education">Education</button>
+                <button class="category-tab" data-category="work">Work</button>
+            </div>
+            <div class="documents-grid" id="documentsGrid"></div>
         </div>
 
-        <!-- Documents Grid -->
-        <div class="documents-grid" id="documentsGrid">
-            <!-- Documents will be loaded here by JavaScript -->
+        <footer class="footer">
+            <div class="footer-title">Saad A Razzaq</div>
+            <p style="font-size:0.9rem; color:#555;">Professional Career Documents & Credentials</p>
+            <div class="social-links">
+                <a href="https://github.com/SaadARazzaq" class="social-icon" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com" class="social-icon" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:your.email@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-file"></i> Documents</a>
+                <a href="https://github.com/SaadARazzaq/Career-Documents" target="_blank" rel="noopener noreferrer"><i class="fas fa-code-branch"></i> GitHub Repo</a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Saad A Razzaq. All documents are original and verified.<br>
+                Repository: <a href="https://github.com/SaadARazzaq/Career-Documents" style="color: var(--accent);">SaadARazzaq/Career-Documents</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div class="modal-overlay" id="pdfModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalTitle">Document Preview</span>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <iframe class="modal-iframe" id="pdfIframe" src="" allowfullscreen></iframe>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="modalDownloadBtn"><i class="fas fa-download"></i> Download</button>
+                <button class="btn btn-primary" id="modalCloseBtn">Close</button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer" id="footer">
-        <div class="footer-content">
-            <div class="footer-title"><i class="fas fa-user-circle"></i> Saad A Razzaq</div>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Professional Career Documents & Credentials</p>
-            
-            <div class="social-links">
-                <a href="https://github.com/SaadARazzaq" class="social-icon" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://linkedin.com" class="social-icon" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="mailto:your.email@example.com" class="social-icon" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-            </div>
-
-            <div class="footer-links">
-                <a href="#documents" class="footer-link">
-                    <i class="fas fa-file"></i> Documents
-                </a>
-                <a href="https://github.com/SaadARazzaq/Career-Documents" class="footer-link" target="_blank">
-                    <i class="fas fa-code-branch"></i> View on GitHub
-                </a>
-                <a href="#home" class="footer-link">
-                    <i class="fas fa-arrow-up"></i> Back to Top
-                </a>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 Saad A Razzaq. All documents are original and verified. <br>Repository: <a href="https://github.com/SaadARazzaq/Career-Documents" style="color: var(--primary-color); text-decoration: none;">SaadARazzaq/Career-Documents</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" title="Back to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <button class="back-to-top" id="backToTop" title="Back to top"><i class="fas fa-arrow-up"></i></button>
 
     <script>
-        // Document Database with GitHub Raw URLs
-        const documents = [
-            // Root Level Documents
-            {
-                id: 1,
-                title: 'Curriculum Vitae',
-                fileName: 'CV.pdf',
-                category: 'root',
-                description: 'Professional curriculum vitae highlighting skills, experience, and education',
-                icon: 'fas fa-id-card',
-                fileSize: '80 KB',
-                path: 'CV.pdf',
-                type: 'document'
-            },
-            {
-                id: 2,
-                title: 'Admission Documents',
-                fileName: 'Admission_Docs_Merged.pdf',
-                category: 'root',
-                description: 'University admission documents and acceptance letters',
-                icon: 'fas fa-envelope-open',
-                fileSize: '5.9 MB',
-                path: 'Admission_Docs_Merged.pdf',
-                type: 'document'
-            },
-            {
-                id: 3,
-                title: 'National ID Card',
-                fileName: 'CNIC ID Card.pdf',
-                category: 'root',
-                description: 'National ID card for identity verification and official purposes',
-                icon: 'fas fa-credit-card',
-                fileSize: '1.9 MB',
-                path: 'CNIC%20ID%20Card.pdf',
-                type: 'document'
-            },
-            {
-                id: 4,
-                title: 'Domicile Certificate',
-                fileName: 'Domicile Saad.pdf',
-                category: 'root',
-                description: 'Domicile certificate for educational and professional purposes',
-                icon: 'fas fa-certificate',
-                fileSize: '567 KB',
-                path: 'Domicile%20Saad.pdf',
-                type: 'document'
-            },
-            {
-                id: 5,
-                title: 'IELTS Test Results',
-                fileName: 'IELTS Result.pdf',
-                category: 'root',
-                description: 'English language proficiency certification (IELTS)',
-                icon: 'fas fa-language',
-                fileSize: '1 MB',
-                path: 'IELTS%20Result.pdf',
-                type: 'document'
-            },
-            {
-                id: 6,
-                title: 'PTE Test Results',
-                fileName: 'PTE Result.pdf',
-                category: 'root',
-                description: 'English language proficiency certification (PTE)',
-                icon: 'fas fa-globe',
-                fileSize: '1.4 MB',
-                path: 'PTE%20Result.pdf',
-                type: 'document'
-            },
-            {
-                id: 7,
-                title: 'International Passport',
-                fileName: 'Passport.pdf',
-                category: 'root',
-                description: 'International travel passport for global mobility',
-                icon: 'fas fa-passport',
-                fileSize: '729 KB',
-                path: 'Passport.pdf',
-                type: 'document'
-            },
+        (function() {
+            const documents = [
+                { id: 1, title: 'Curriculum Vitae', fileName: 'CV.pdf', category: 'root', description: 'Professional curriculum vitae.', icon: 'fa-id-card', fileSize: '80 KB', path: 'CV.pdf', type: 'document' },
+                { id: 2, title: 'Admission Documents', fileName: 'Admission_Docs_Merged.pdf', category: 'root', description: 'University admission documents.', icon: 'fa-envelope-open', fileSize: '5.9 MB', path: 'Admission_Docs_Merged.pdf', type: 'document' },
+                { id: 3, title: 'National ID Card', fileName: 'CNIC ID Card.pdf', category: 'root', description: 'National ID card.', icon: 'fa-credit-card', fileSize: '1.9 MB', path: 'CNIC%20ID%20Card.pdf', type: 'document' },
+                { id: 4, title: 'Domicile Certificate', fileName: 'Domicile Saad.pdf', category: 'root', description: 'Domicile certificate.', icon: 'fa-certificate', fileSize: '567 KB', path: 'Domicile%20Saad.pdf', type: 'document' },
+                { id: 5, title: 'IELTS Test Results', fileName: 'IELTS Result.pdf', category: 'root', description: 'IELTS result.', icon: 'fa-language', fileSize: '1 MB', path: 'IELTS%20Result.pdf', type: 'document' },
+                { id: 6, title: 'PTE Test Results', fileName: 'PTE Result.pdf', category: 'root', description: 'PTE result.', icon: 'fa-globe', fileSize: '1.4 MB', path: 'PTE%20Result.pdf', type: 'document' },
+                { id: 7, title: 'International Passport', fileName: 'Passport.pdf', category: 'root', description: 'International passport.', icon: 'fa-passport', fileSize: '729 KB', path: 'Passport.pdf', type: 'document' },
+                { id: 8, title: 'Professional Certifications', fileName: 'Certifications', category: 'certifications', description: 'Collection of professional certifications.', icon: 'fa-trophy', fileSize: 'Folder', path: 'Certifications', type: 'folder' },
+                { id: 9, title: 'FAST NUCES Records', fileName: 'FAST NUCES', category: 'university', description: 'University documents from FAST NUCES.', icon: 'fa-graduation-cap', fileSize: 'Folder', path: 'FAST%20NUCES', type: 'folder' },
+                { id: 10, title: 'HSSC Documents', fileName: 'HSSC Docs', category: 'education', description: 'Higher Secondary School Certificate.', icon: 'fa-book-open', fileSize: 'Folder', path: 'HSSC%20Docs', type: 'folder' },
+                { id: 11, title: 'SSC Documents', fileName: 'SSC Docs', category: 'education', description: 'Secondary School Certificate.', icon: 'fa-book', fileSize: 'Folder', path: 'SSC%20Docs', type: 'folder' },
+                { id: 12, title: 'Work Contracts', fileName: 'Work Contracts', category: 'work', description: 'Employment contracts.', icon: 'fa-file-contract', fileSize: 'Folder', path: 'Work%20Contracts', type: 'folder' }
+            ];
 
-            // Categorized Documents
-            {
-                id: 8,
-                title: 'Professional Certifications',
-                fileName: 'Certifications Folder',
-                category: 'certifications',
-                description: 'Collection of professional certifications and achievement credentials',
-                icon: 'fas fa-trophy',
-                fileSize: 'Folder',
-                path: 'Certifications',
-                type: 'folder'
-            },
-            {
-                id: 9,
-                title: 'FAST NUCES Records',
-                fileName: 'FAST NUCES Folder',
-                category: 'university',
-                description: 'University documents and official transcripts from FAST NUCES',
-                icon: 'fas fa-graduation-cap',
-                fileSize: 'Folder',
-                path: 'FAST%20NUCES',
-                type: 'folder'
-            },
-            {
-                id: 10,
-                title: 'HSSC Documents',
-                fileName: 'HSSC Docs Folder',
-                category: 'education',
-                description: 'Higher Secondary School Certificate documents and records',
-                icon: 'fas fa-book-open',
-                fileSize: 'Folder',
-                path: 'HSSC%20Docs',
-                type: 'folder'
-            },
-            {
-                id: 11,
-                title: 'SSC Documents',
-                fileName: 'SSC Docs Folder',
-                category: 'education',
-                description: 'Secondary School Certificate documents and academic records',
-                icon: 'fas fa-book',
-                fileSize: 'Folder',
-                path: 'SSC%20Docs',
-                type: 'folder'
-            },
-            {
-                id: 12,
-                title: 'Work Contracts',
-                fileName: 'Work Contracts Folder',
-                category: 'work',
-                description: 'Employment contracts and professional work agreements',
-                icon: 'fas fa-file-contract',
-                fileSize: 'Folder',
-                path: 'Work%20Contracts',
-                type: 'folder'
-            }
-        ];
+            const rawGitHubURL = 'https://raw.githubusercontent.com/SaadARazzaq/Career-Documents/main/';
+            const githubRepoURL = 'https://github.com/SaadARazzaq/Career-Documents/blob/main/';
 
-        const rawGitHubURL = 'https://raw.githubusercontent.com/SaadARazzaq/Career-Documents/main/';
-        const githubRepoURL = 'https://github.com/SaadARazzaq/Career-Documents/blob/main/';
+            let currentCategory = 'all';
+            let searchTerm = '';
 
-        let currentCategory = 'all';
-        let searchTerm = '';
+            const grid = document.getElementById('documentsGrid');
+            const categoryTabs = document.querySelectorAll('#categoryTabs .category-tab');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const backToTop = document.getElementById('backToTop');
 
-        // DOM Elements
-        const documentsGrid = document.getElementById('documentsGrid');
-        const categoryTabs = document.querySelectorAll('.category-tab');
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        const backToTopBtn = document.getElementById('backToTop');
+            // Modal elements
+            const modal = document.getElementById('pdfModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const pdfIframe = document.getElementById('pdfIframe');
+            const closeModalBtn = document.getElementById('closeModal');
+            const modalCloseBtn = document.getElementById('modalCloseBtn');
+            const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+            let currentModalDoc = null;
 
-        // Initialize
-        function init() {
-            renderDocuments();
-            attachEventListeners();
-            window.addEventListener('scroll', handleScroll);
-        }
-
-        // Render Documents
-        function renderDocuments() {
-            const filtered = documents.filter(doc => {
-                const matchCategory = currentCategory === 'all' || doc.category === currentCategory;
-                const matchSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                  doc.description.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchCategory && matchSearch;
-            });
-
-            if (filtered.length === 0) {
-                documentsGrid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <i class="fas fa-search"></i>
-                        <p>No documents found matching your search.</p>
-                        <button onclick="clearSearch()" style="padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer;">Clear Search</button>
-                    </div>
-                `;
-                return;
-            }
-
-            documentsGrid.innerHTML = filtered.map((doc, index) => `
-                <div class="document-card" style="animation-delay: ${index * 0.05}s;">
-                    <div class="document-icon">
-                        <i class="${doc.icon}"></i>
-                    </div>
-                    <div class="document-content">
-                        <span class="document-category">${doc.category.replace('-', ' ')}</span>
-                        <h3 class="document-title">${doc.title}</h3>
-                        <p class="document-description">${doc.description}</p>
-                        <div class="document-meta">
-                            <span class="file-size">
-                                <i class="fas fa-hdd"></i> ${doc.fileSize}
-                            </span>
-                            <span>${doc.type === 'folder' ? '<i class="fas fa-folder"></i> Folder' : '<i class="fas fa-file-pdf"></i> PDF'}</span>
-                        </div>
-                        <div class="document-actions">
-                            <button class="btn-action btn-view" onclick="viewDocument('${doc.path}', '${doc.type}')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-action btn-download" onclick="downloadDocument('${doc.path}', '${doc.fileName}', '${doc.type}')">
-                                <i class="fas fa-download"></i> Get
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // View Document
-        function viewDocument(path, type) {
-            if (type === 'folder') {
-                window.open(`${githubRepoURL}${path}`, '_blank');
-            } else {
-                window.open(`${rawGitHubURL}${path}`, '_blank');
-            }
-        }
-
-        // Download Document
-        function downloadDocument(path, fileName, type) {
-            if (type === 'folder') {
-                window.open(`${githubRepoURL}${path}`, '_blank');
-            } else {
-                const link = document.createElement('a');
-                link.href = `${rawGitHubURL}${path}`;
-                link.download = fileName;
-                link.setAttribute('target', '_blank');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-
-        // Clear Search
-        function clearSearch() {
-            searchInput.value = '';
-            searchTerm = '';
-            renderDocuments();
-        }
-
-        // Event Listeners
-        function attachEventListeners() {
-            categoryTabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    categoryTabs.forEach(t => t.classList.remove('active'));
-                    e.target.closest('.category-tab').classList.add('active');
-                    currentCategory = e.target.closest('.category-tab').dataset.category;
-                    renderDocuments();
-                    window.scrollTo({ top: document.getElementById('documents').offsetTop - 100, behavior: 'smooth' });
+            function renderDocuments() {
+                const filtered = documents.filter(doc => {
+                    const matchCat = currentCategory === 'all' || doc.category === currentCategory;
+                    const term = searchTerm.toLowerCase();
+                    return matchCat && (doc.title.toLowerCase().includes(term) || doc.description.toLowerCase().includes(term));
                 });
-            });
 
-            searchInput.addEventListener('keyup', (e) => {
-                searchTerm = e.target.value;
-                renderDocuments();
-            });
+                if (!filtered.length) {
+                    grid.innerHTML = `<div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>No documents found.</p>
+                        <button class="clear-search-btn" onclick="document.getElementById('searchInput').value=''; document.dispatchEvent(new Event('search'));">Clear Search</button>
+                    </div>`;
+                    return;
+                }
 
-            searchBtn.addEventListener('click', () => {
-                searchTerm = searchInput.value;
-                renderDocuments();
-            });
+                grid.innerHTML = filtered.map(doc => `
+                    <div class="document-card">
+                        <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
+                        <div class="card-content">
+                            <span class="card-category">${doc.category === 'root' ? 'Root Documents' : doc.category}</span>
+                            <h3 class="card-title">${doc.title}</h3>
+                            <p class="card-description">${doc.description}</p>
+                            <div class="card-meta">
+                                <span><i class="far fa-hdd"></i> ${doc.fileSize}</span>
+                                <span>${doc.type === 'folder' ? '<i class="far fa-folder"></i> Folder' : '<i class="far fa-file-pdf"></i> PDF'}</span>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary view-btn" data-path="${doc.path}" data-type="${doc.type}" data-title="${doc.title}" data-file="${doc.fileName}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn btn-outline download-btn" data-path="${doc.path}" data-type="${doc.type}" data-file="${doc.fileName}">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
 
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchTerm = searchInput.value;
-                    renderDocuments();
+            // ── VIEW: opens inline for PDFs, GitHub folder for folders ──
+            function viewDocument(path, type, title) {
+                if (type === 'folder') {
+                    // Show the folder contents on GitHub
+                    window.open(githubRepoURL + path, '_blank', 'noopener,noreferrer');
+                    return;
+                }
+                // PDF: display directly in iframe using browser's built-in viewer
+                const rawUrl = rawGitHubURL + path;
+                modalTitle.textContent = title || 'Document Preview';
+                pdfIframe.src = rawUrl;   // native PDF view, no download
+                currentModalDoc = { path, fileName: title, type, rawUrl };
+                modal.classList.add('active');
+            }
+
+            function downloadDocument(path, type, fileName) {
+                if (type === 'folder') {
+                    window.open(githubRepoURL + path, '_blank', 'noopener,noreferrer');
+                } else {
+                    const a = document.createElement('a');
+                    a.href = rawGitHubURL + path;
+                    a.download = fileName;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                pdfIframe.src = '';
+                currentModalDoc = null;
+            }
+
+            // Event delegation
+            grid.addEventListener('click', (e) => {
+                const viewBtn = e.target.closest('.view-btn');
+                if (viewBtn) {
+                    viewDocument(viewBtn.dataset.path, viewBtn.dataset.type, viewBtn.dataset.title);
+                    return;
+                }
+                const downloadBtn = e.target.closest('.download-btn');
+                if (downloadBtn) {
+                    downloadDocument(downloadBtn.dataset.path, downloadBtn.dataset.type, downloadBtn.dataset.file);
                 }
             });
 
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentCategory = tab.dataset.category;
+                    renderDocuments();
+                });
             });
-        }
 
-        // Handle Scroll
-        function handleScroll() {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
+            // Search
+            function performSearch() {
+                searchTerm = searchInput.value.trim();
+                renderDocuments();
             }
-        }
-
-        // Update Nav Links
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') performSearch();
+                else performSearch(); // live search
             });
-        });
+            document.addEventListener('search', () => {
+                searchTerm = searchInput.value.trim();
+                renderDocuments();
+            });
 
-        // Start
-        init();
+            // Back to top
+            window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 400));
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // Modal controls
+            closeModalBtn.addEventListener('click', closeModal);
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            modalDownloadBtn.addEventListener('click', () => {
+                if (currentModalDoc) downloadDocument(currentModalDoc.path, currentModalDoc.type, currentModalDoc.fileName);
+            });
+
+            // Initial render
+            renderDocuments();
+        })();
     </script>
 </body>
 </html>
