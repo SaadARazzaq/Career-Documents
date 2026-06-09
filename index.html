@@ -630,7 +630,7 @@
                     </div>`;
             }
 
-            // ---- Helper: view a PDF using fetch + blob URL ----
+            // ---- Helper: view a PDF using fetch + blob URL with forced MIME type ----
             function viewPDFWithBlob(rawUrl, title) {
                 modalTitle.textContent = title || 'Document Preview';
                 showLoader();
@@ -642,15 +642,17 @@
                         return response.blob();
                     })
                     .then(blob => {
+                        // GitHub sometimes returns application/octet-stream – we force application/pdf
+                        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+                        
                         // Revoke previous blob URL if any
                         if (currentBlobUrl) {
                             URL.revokeObjectURL(currentBlobUrl);
                         }
-                        const blobUrl = URL.createObjectURL(blob);
-                        currentBlobUrl = blobUrl;
+                        currentBlobUrl = URL.createObjectURL(pdfBlob);
 
-                        // Embed the blob URL – browser will show it inline
-                        pdfViewer.innerHTML = `<embed src="${blobUrl}" type="application/pdf" width="100%" height="100%" />`;
+                        // Use iframe for reliable inline display (works across all browsers)
+                        pdfViewer.innerHTML = `<iframe src="${currentBlobUrl}" type="application/pdf" width="100%" height="100%" style="border:none;"></iframe>`;
                     })
                     .catch(error => {
                         console.error('Error loading PDF:', error);
@@ -833,7 +835,7 @@
                 }).join('');
             }
 
-            // ---- CLEAR SEARCH (fixes the original button) ----
+            // ---- CLEAR SEARCH ----
             function clearSearch() {
                 searchInput.value = '';
                 searchTerm = '';
