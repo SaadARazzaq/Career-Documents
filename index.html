@@ -602,6 +602,7 @@
             let currentCategory = 'all';
             let searchTerm = '';
             let currentFolder = null;
+            let currentBlobUrl = null;
 
             const grid = document.getElementById('documentsGrid');
             const categoryTabs = document.querySelectorAll('#categoryTabs .category-tab');
@@ -621,84 +622,54 @@
             const modalDownloadBtn = document.getElementById('modalDownloadBtn');
             let currentModalDoc = null;
 
-            function renderDocuments() {
-                const filtered = documents.filter(doc => {
-                    const matchCat = currentCategory === 'all' || doc.category === currentCategory;
-                    const term = searchTerm.toLowerCase();
-                    return matchCat && (doc.title.toLowerCase().includes(term) || doc.description.toLowerCase().includes(term));
-                });
-
-                if (!filtered.length) {
-                    grid.innerHTML = `<div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <p>No documents found.</p>
-                        <button class="clear-search-btn" onclick="document.getElementById('searchInput').value=''; document.dispatchEvent(new Event('search'));">Clear Search</button>
+            // ---- Helper: show a simple loading spinner inside the viewer ----
+            function showLoader() {
+                pdfViewer.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#666; font-family:var(--font-sans);">
+                        <i class="fas fa-spinner fa-spin" style="font-size:2rem; margin-right:12px;"></i> Loading PDF...
                     </div>`;
-                    return;
-                }
-
-                grid.innerHTML = filtered.map(doc => {
-                    // For folders, show only "Go to Folder" button
-                    if (doc.type === 'folder') {
-                        return `
-                            <div class="document-card">
-                                <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
-                                <div class="card-content">
-                                    <span class="card-category">${doc.category}</span>
-                                    <h3 class="card-title">${doc.title}</h3>
-                                    <p class="card-description">${doc.description}</p>
-                                    <div class="card-meta">
-                                        <span><i class="far fa-folder"></i> Folder</span>
-                                    </div>
-                                    <div class="card-actions">
-                                        <button class="btn btn-primary" onclick="window.app.openFolder('${doc.path}', '${doc.title}')">
-                                            <i class="fas fa-folder-open"></i> Go to Folder
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    
-                    // For PDFs, show View and Download buttons
-                    return `
-                        <div class="document-card">
-                            <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
-                            <div class="card-content">
-                                <span class="card-category">${doc.category === 'root' ? 'Root Documents' : doc.category}</span>
-                                <h3 class="card-title">${doc.title}</h3>
-                                <p class="card-description">${doc.description}</p>
-                                <div class="card-meta">
-                                    <span><i class="far fa-hdd"></i> ${doc.fileSize}</span>
-                                    <span><i class="far fa-file-pdf"></i> PDF</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-primary" onclick="window.app.viewDocument('${doc.path}', '${doc.title}', '${doc.fileName}')">
-                                        <i class="fas fa-eye"></i> View
-                                    </button>
-                                    <button class="btn btn-outline" onclick="window.app.downloadDocument('${doc.path}', '${doc.fileName}')">
-                                        <i class="fas fa-download"></i> Download
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
             }
 
-            // ── VIEW PDF DOCUMENT ──
+            // ---- Helper: view a PDF using fetch + blob URL ----
+            function viewPDFWithBlob(rawUrl, title) {
+                modalTitle.textContent = title || 'Document Preview';
+                showLoader();
+                modal.classList.add('active');
+
+                fetch(rawUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        // Revoke previous blob URL if any
+                        if (currentBlobUrl) {
+                            URL.revokeObjectURL(currentBlobUrl);
+                        }
+                        const blobUrl = URL.createObjectURL(blob);
+                        currentBlobUrl = blobUrl;
+
+                        // Embed the blob URL – browser will show it inline
+                        pdfViewer.innerHTML = `<embed src="${blobUrl}" type="application/pdf" width="100%" height="100%" />`;
+                    })
+                    .catch(error => {
+                        console.error('Error loading PDF:', error);
+                        pdfViewer.innerHTML = `
+                            <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#c00; font-family:var(--font-sans);">
+                                <i class="fas fa-exclamation-circle" style="font-size:2rem; margin-right:12px;"></i>
+                                Failed to load PDF. Please try again.
+                            </div>`;
+                    });
+            }
+
+            // ---- VIEW DOCUMENT (root PDFs) ----
             function viewDocument(path, title, fileName) {
                 const rawUrl = rawGitHubURL + path;
-                modalTitle.textContent = title || 'Document Preview';
-                
-                // Use PDF viewer with embed tag - no download
-                pdfViewer.innerHTML = `<embed src="${rawUrl}#toolbar=0" type="application/pdf" width="100%" height="100%" />`;
-                
-                currentModalDoc = { path, fileName: fileName, type: 'document', rawUrl };
-                modal.classList.add('active');
+                currentModalDoc = { path, fileName: fileName, type: 'document' };
+                viewPDFWithBlob(rawUrl, title);
             }
 
-            // ── DOWNLOAD DOCUMENT ──
+            // ---- DOWNLOAD DOCUMENT ----
             function downloadDocument(path, fileName) {
                 const fullUrl = rawGitHubURL + path;
                 const a = document.createElement('a');
@@ -709,28 +680,47 @@
                 document.body.removeChild(a);
             }
 
-            // ── OPEN FOLDER ──
+            // ---- VIEW FOLDER DOCUMENT ----
+            function viewFolderDocument(folderPath, fileName) {
+                const fullPath = folderPath + '/' + fileName;
+                const rawUrl = rawGitHubURL + fullPath;
+                currentModalDoc = { path: fullPath, fileName: fileName, type: 'document' };
+                viewPDFWithBlob(rawUrl, fileName);
+            }
+
+            // ---- DOWNLOAD FOLDER DOCUMENT ----
+            function downloadFolderDocument(folderPath, fileName) {
+                const fullPath = folderPath + '/' + fileName;
+                downloadDocument(fullPath, fileName);
+            }
+
+            // ---- CLOSE MODAL ----
+            function closeModal() {
+                modal.classList.remove('active');
+                pdfViewer.innerHTML = '';
+                if (currentBlobUrl) {
+                    URL.revokeObjectURL(currentBlobUrl);
+                    currentBlobUrl = null;
+                }
+                currentModalDoc = null;
+            }
+
+            // ---- OPEN FOLDER (fetches from GitHub API) ----
             function openFolder(folderPath, folderName) {
                 currentFolder = { path: folderPath, name: folderName };
-                
-                // Show breadcrumb
                 filterSection.style.display = 'none';
                 document.getElementById('categoryTabs').style.display = 'none';
                 breadcrumb.style.display = 'flex';
                 document.getElementById('currentFolderName').textContent = folderName;
 
-                // Fetch folder contents from GitHub API
                 const apiUrl = githubAPIURL + folderPath;
-                
                 fetch(apiUrl)
                     .then(response => {
                         if (!response.ok) throw new Error('Failed to fetch folder');
                         return response.json();
                     })
                     .then(items => {
-                        // Filter only PDF files
                         const pdfFiles = items.filter(item => item.type === 'file' && item.name.endsWith('.pdf'));
-                        
                         if (!pdfFiles.length) {
                             grid.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">
                                 <i class="fas fa-folder-open"></i>
@@ -738,8 +728,6 @@
                             </div>`;
                             return;
                         }
-
-                        // Render PDF files from folder
                         grid.innerHTML = pdfFiles.map((file) => `
                             <div class="document-card">
                                 <div class="card-icon"><i class="fas fa-file-pdf"></i></div>
@@ -772,31 +760,7 @@
                     });
             }
 
-            // ── VIEW FOLDER DOCUMENT ──
-            function viewFolderDocument(folderPath, fileName) {
-                const fullPath = folderPath + '/' + fileName;
-                const rawUrl = rawGitHubURL + fullPath;
-                modalTitle.textContent = fileName;
-                
-                // Use PDF viewer with embed tag - no download
-                pdfViewer.innerHTML = `<embed src="${rawUrl}#toolbar=0" type="application/pdf" width="100%" height="100%" />`;
-                
-                currentModalDoc = { path: fullPath, fileName: fileName, type: 'document', rawUrl };
-                modal.classList.add('active');
-            }
-
-            // ── DOWNLOAD FOLDER DOCUMENT ──
-            function downloadFolderDocument(folderPath, fileName) {
-                const fullPath = folderPath + '/' + fileName;
-                downloadDocument(fullPath, fileName);
-            }
-
-            function closeModal() {
-                modal.classList.remove('active');
-                pdfViewer.innerHTML = '';
-                currentModalDoc = null;
-            }
-
+            // ---- BACK TO BROWSE ----
             function backToBrowse() {
                 currentFolder = null;
                 filterSection.style.display = 'flex';
@@ -805,15 +769,94 @@
                 renderDocuments();
             }
 
-            // Expose functions globally
+            // ---- RENDER DOCUMENTS GRID ----
+            function renderDocuments() {
+                const filtered = documents.filter(doc => {
+                    const matchCat = currentCategory === 'all' || doc.category === currentCategory;
+                    const term = searchTerm.toLowerCase();
+                    return matchCat && (doc.title.toLowerCase().includes(term) || doc.description.toLowerCase().includes(term));
+                });
+
+                if (!filtered.length) {
+                    grid.innerHTML = `<div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>No documents found.</p>
+                        <button class="clear-search-btn" onclick="window.app.clearSearch()">Clear Search</button>
+                    </div>`;
+                    return;
+                }
+
+                grid.innerHTML = filtered.map(doc => {
+                    if (doc.type === 'folder') {
+                        return `
+                            <div class="document-card">
+                                <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
+                                <div class="card-content">
+                                    <span class="card-category">${doc.category}</span>
+                                    <h3 class="card-title">${doc.title}</h3>
+                                    <p class="card-description">${doc.description}</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-folder"></i> Folder</span>
+                                    </div>
+                                    <div class="card-actions">
+                                        <button class="btn btn-primary" onclick="window.app.openFolder('${doc.path}', '${doc.title}')">
+                                            <i class="fas fa-folder-open"></i> Go to Folder
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    return `
+                        <div class="document-card">
+                            <div class="card-icon"><i class="fas ${doc.icon}"></i></div>
+                            <div class="card-content">
+                                <span class="card-category">${doc.category === 'root' ? 'Root Documents' : doc.category}</span>
+                                <h3 class="card-title">${doc.title}</h3>
+                                <p class="card-description">${doc.description}</p>
+                                <div class="card-meta">
+                                    <span><i class="far fa-hdd"></i> ${doc.fileSize}</span>
+                                    <span><i class="far fa-file-pdf"></i> PDF</span>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="btn btn-primary" onclick="window.app.viewDocument('${doc.path}', '${doc.title}', '${doc.fileName}')">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-outline" onclick="window.app.downloadDocument('${doc.path}', '${doc.fileName}')">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // ---- CLEAR SEARCH (fixes the original button) ----
+            function clearSearch() {
+                searchInput.value = '';
+                searchTerm = '';
+                renderDocuments();
+            }
+
+            // Expose necessary functions globally
             window.app = {
                 viewDocument,
                 downloadDocument,
                 openFolder,
                 viewFolderDocument,
                 downloadFolderDocument,
-                backToBrowse
+                backToBrowse,
+                clearSearch,
+                performSearch
             };
+
+            // ---- SEARCH ----
+            function performSearch() {
+                searchTerm = searchInput.value.trim();
+                renderDocuments();
+            }
 
             // Category tabs
             categoryTabs.forEach(tab => {
@@ -825,18 +868,14 @@
                 });
             });
 
-            // Search
-            function performSearch() {
-                searchTerm = searchInput.value.trim();
-                renderDocuments();
-            }
+            // Search input
             searchBtn.addEventListener('click', performSearch);
             searchInput.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') performSearch();
                 else performSearch();
             });
 
-            // Back to browse
+            // Back to browse button
             backToBrowseBtn.addEventListener('click', backToBrowse);
 
             // Back to top
