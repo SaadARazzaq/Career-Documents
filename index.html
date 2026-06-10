@@ -826,6 +826,18 @@
                 document.body.removeChild(a);
             }
 
+            // View a PDF inside a subfolder
+            function viewFolderDocument(folderPath, fileName) {
+                const fullPath = folderPath + '/' + encodeURIComponent(fileName);
+                viewDocument(fullPath, fileName, fileName);
+            }
+            
+            // Download a PDF from a subfolder
+            function downloadFolderDocument(folderPath, fileName) {
+                const fullPath = folderPath + '/' + encodeURIComponent(fileName);
+                downloadDocument(fullPath, fileName);
+            }
+
             // Folder open: special case for Certifications
             function openFolder(folderPath, folderName) {
                 currentFolder = { path: folderPath, name: folderName };
@@ -1014,6 +1026,8 @@
                 openFolder,
                 viewCertPDF,
                 downloadCertPDF,
+                viewFolderDocument,       
+                downloadFolderDocument,   
                 backToBrowse,
                 clearSearch,
                 performSearch
