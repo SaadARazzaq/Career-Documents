@@ -57,6 +57,11 @@
             border-radius: 16px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;          /* vertical centering */
+            justify-content: space-between;
+            gap: 32px;
+            flex-wrap: wrap;              /* wrap on small screens */
         }
         .hero::after {
             content: '';
@@ -68,6 +73,7 @@
             border-radius: 50%;
             background: rgba(255,255,255,0.03);
             pointer-events: none;
+            z-index: 1;
         }
         .hero .label-tag {
             display: inline-block;
@@ -110,6 +116,22 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
+        }
+        .hero-content {
+            flex: 1;
+            min-width: 0;                 /* prevent overflow */
+            z-index: 2;                   /* stay above the decorative ::after */
+        }
+        /* Circular profile image */
+        .hero-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            flex-shrink: 0;               /* never shrink */
+            z-index: 2;
         }
         .meta-label {
             font-size: 0.7rem;
@@ -489,32 +511,46 @@
             .search-box { width: 100%; max-width: 100%; }
             .documents-grid { grid-template-columns: 1fr; }
         }
+        @media (max-width: 600px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-avatar {
+                margin: 0 auto;
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="portfolio-wrapper">
         <header class="hero">
-            <span class="label-tag">Career Documents</span>
-            <h1>Saad Abdur Razzaq</h1>
-            <p class="subtitle">Professional Certifications, Education & Credentials</p>
-            <div class="hero-meta-row">
-                <div class="hero-meta-item">
-                    <span class="meta-label">Documents</span>
-                    <span class="meta-value">12</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="meta-label">Categories</span>
-                    <span class="meta-value">5</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="meta-label">Total Size</span>
-                    <span class="meta-value">~11 MB</span>
-                </div>
-                <div class="hero-meta-item">
-                    <span class="meta-label">Status</span>
-                    <span class="meta-value">Verified</span>
+            <div class="hero-content">
+                <span class="label-tag">Career Documents</span>
+                <h1>Saad Abdur Razzaq</h1>
+                <p class="subtitle">Professional Certifications, Education &amp; Credentials</p>
+                <div class="hero-meta-row">
+                    <div class="hero-meta-item">
+                        <span class="meta-label">Documents</span>
+                        <span class="meta-value">12</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="meta-label">Categories</span>
+                        <span class="meta-value">5</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="meta-label">Total Size</span>
+                        <span class="meta-value">~11 MB</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="meta-label">Status</span>
+                        <span class="meta-value">Verified</span>
+                    </div>
                 </div>
             </div>
+            <img src="picture.jpeg" alt="Saad A Razzaq" class="hero-avatar">
         </header>
 
         <div class="main-body">
