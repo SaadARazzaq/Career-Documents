@@ -1,0 +1,321 @@
+\documentclass[10.5pt,a4paper]{article}
+
+% --------------------------------------------------
+% PACKAGES
+% --------------------------------------------------
+\usepackage[left=0.4in,right=0.4in,top=0.25in,bottom=0.4in]{geometry}
+\usepackage{fontspec}
+\setmainfont{Liberation Sans}
+
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{array}
+
+% --------------------------------------------------
+% COLORS / HYPERLINKS
+% --------------------------------------------------
+\definecolor{accent}{RGB}{20,60,110}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=accent,
+    linkcolor=accent
+}
+
+% --------------------------------------------------
+% SECTION FORMATTING
+% --------------------------------------------------
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {}{0em}{}
+  [\vspace{2pt}\color{accent}\hrule\vspace{0.35em}]
+
+\titlespacing*{\section}{0pt}{0.85em}{0.45em}
+
+% --------------------------------------------------
+% LIST FORMATTING
+% --------------------------------------------------
+\setlist[itemize]{
+    leftmargin=1.15em,
+    itemsep=1.5pt,
+    topsep=1pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+\pagestyle{empty}
+
+% --------------------------------------------------
+% ENTRY COMMAND
+% --------------------------------------------------
+\newcommand{\entry}[4]{%
+    \noindent
+    \noindent\textbf{#1} \hfill \textit{#2}\\
+    \textit{#3} \hfill #4\\[-1pt]
+}
+
+% --------------------------------------------------
+% DOCUMENT
+% --------------------------------------------------
+\begin{document}
+
+% ==================================================
+% HEADER
+% ==================================================
+\begin{center}
+    {\LARGE \bfseries Saad Abdur Razzaq}\\[3pt]
+
+    \textit{Machine Learning Researcher | Optimization \& Training Dynamics | Computer Vision}\\[3pt]
+
+    Faisalabad, Pakistan
+    \quad $\vert$ \quad
+    +92 303-6668942
+    \quad $\vert$ \quad
+    \href{mailto:saadabdurrazzaq00@gmail.com}
+    {saadabdurrazzaq00@gmail.com}
+    \\[2pt]
+
+    \href{https://linkedin.com/in/saadarazzaq/}
+    {\underline{LinkedIn}}
+    \quad $\vert$ \quad
+    \href{https://github.com/SaadARazzaq}
+    {\underline{GitHub}}
+    \quad $\vert$ \quad
+    \href{https://youtube.com/@SaadARazzaq}
+    {\underline{YouTube}}
+    \quad $\vert$ \quad
+    \href{https://theappliedengineer.substack.com/}
+    {\underline{The Applied Engineer Blogs}}
+\end{center}
+
+
+% ==================================================
+% PERSONAL SUMMARY
+% ==================================================
+\section*{Personal Summary}
+
+Machine learning researcher interested in optimization, training dynamics, and the mechanisms underlying learning and generalization in deep neural networks. My work involves implementing learning algorithms and neural architectures from scratch, systematically comparing model architectures, and analyzing computational and predictive efficiency, with a particular focus on computer vision and visual representation learning. I design controlled experiments to investigate model behavior, test hypotheses, quantify performance differences, and communicate findings through reproducible analysis and visualization.
+
+
+
+% ==================================================
+% RESEARCH INTERESTS
+% ==================================================
+\section*{Research Interests}
+
+\noindent\textbf{Core:} Deep Learning Optimization, Training Dynamics, Architecture Analysis, Model Efficiency, Computer Vision
+
+\vspace{2pt}
+
+\noindent\textbf{Methods:} From-Scratch Implementation, Systematic Comparison, Quantified Evaluation, Visualization
+
+
+% ==================================================
+% EDUCATION
+% ==================================================
+\section*{Education}
+
+\entry
+{National University of Computer and Emerging Sciences (FAST--NUCES)}
+{Sep 2020 -- Jun 2024}
+{B.Sc. Computer Science}
+{Chiniot--Faisalabad, Pakistan}
+
+\begin{itemize}
+    \item Relevant coursework: Artificial Intelligence, Fundamentals of Computer Vision,
+    Applied Machine Learning, Numerical Computing, Probability and Statistics
+\end{itemize}
+
+
+% ==================================================
+% RESEARCH EXPERIENCE
+% ==================================================
+\section*{Research Experience}
+
+\noindent\textbf{Adaptive RMSprop+: Enhanced Optimization Framework for Deep Learning}
+\hfill
+\href{https://github.com/SaadARazzaq/neuro-optimizer}{\underline{GitHub}}
+\begin{itemize}
+    \item Designed and implemented a novel extension of the RMSprop optimizer incorporating dynamic epsilon adjustment, cyclical learning rates with warmup, adaptive gradient noise, and layer-wise momentum adaptation.
+    \item Achieved 28\% faster convergence, 60\% improvement in training stability, and 1.5\% absolute accuracy gain over standard RMSprop across image classification benchmarks.
+    \item Implemented the optimizer from scratch in PyTorch, including mathematical formulation of gradient-norm-aware epsilon scaling and cosine-annealed cyclical learning rate schedules.
+    \item Conducted systematic comparison against Adam and standard RMSprop, demonstrating superior convergence across CIFAR-10 and language modeling tasks.
+\end{itemize}
+
+\vspace{4pt}
+
+\noindent\textbf{From-Scratch Recurrent Neural Network for Sequential Arithmetic Computation}
+\hfill
+\href{https://github.com/SaadARazzaq/arithmetic-rnn-from-scratch}{\underline{GitHub}}
+\begin{itemize}
+    \item Implemented a vanilla RNN entirely from first principles using NumPy, including manual forward propagation, backpropagation through time, gradient clipping, and numerical gradient checking.
+    \item Investigated the ability of recurrent architectures to learn symbolic arithmetic operations (cumulative products) through temporal dependencies, demonstrating successful convergence on sequential computation tasks.
+    \item Validated implementation correctness through numerical gradient checking, ensuring analytical gradients matched numerical approximations to high precision.
+    \item Analyzed training dynamics, gradient propagation, and weight initialization to understand how RNNs represent and learn sequential computation.
+\end{itemize}
+
+\vspace{4pt}
+
+\noindent\textbf{Memory-Augmented Reinforcement Learning: A Systematic Comparison Framework}
+\hfill
+\href{https://github.com/SaadARazzaq/rl-cognitive-task}{\underline{GitHub}}
+\begin{itemize}
+    \item Built a modular experimental framework for systematically comparing RL agents with and without explicit memory mechanisms across multiple decision-making tasks.
+    \item Implemented memory-augmented Q-learning and DQN agents from scratch to isolate the impact of memory on learning dynamics.
+    \item Demonstrated 63\% performance improvement with memory augmentation in T-Maze task and 56\% in spatial alternation, with evidence of cross-task transfer benefits.
+    \item Developed visualization and analytics tools for learning curves, memory utilization patterns, and transfer learning analysis.
+\end{itemize}
+
+\vspace{4pt}
+
+\noindent\textbf{Quantization and Efficiency Analysis of Transformer-Based Sequence Models}
+\hfill
+\href{https://github.com/SaadARazzaq/onnx-translation-optimization}{\underline{GitHub}}
+\begin{itemize}
+    \item Built an experimental framework for systematically evaluating the efficiency-quality trade-off in transformer-based neural machine translation under INT8 quantization.
+    \item Quantized Helsinki-NLP OPUS-MT model using ONNX Runtime, achieving 4$\times$ model size reduction, 2.7$\times$ inference latency improvement, and 4$\times$ memory reduction.
+    \item Maintained translation quality within 1.2\% BLEU score of the original FP32 model, analyzing layer sensitivity and calibration strategies for preserving quality under aggressive compression.
+\end{itemize}
+
+\vspace{4pt}
+
+\noindent\textbf{Robustness Evaluation of FaceNet-Based Recognition Systems}
+\hfill
+\href{https://github.com/SaadARazzaq/nn-face-recognition}{\underline{GitHub}}
+\begin{itemize}
+    \item Developed a modular facial recognition pipeline using PyTorch, MTCNN detection, and FaceNet/InceptionResNetV1 embeddings.
+    \item Evaluated model robustness under systematic distribution shifts including brightness variation, expression changes, image quality degradation, and age variance.
+    \item Achieved 95.2\% accuracy on standard conditions and systematically analyzed failure modes through confusion matrices, ROC curves, and confidence calibration.
+\end{itemize}
+
+
+% ==================================================
+% SELECTED PROJECTS
+% ==================================================
+\section*{Selected Projects}
+
+\noindent\textbf{Synthetic Sequence Generation with LSTM Networks}
+\hfill
+\href{https://github.com/SaadARazzaq/medical-record-synthesis-rnn}{\underline{GitHub}}
+\begin{itemize}
+    \item Developed an LSTM-based sequence-to-sequence framework for generating realistic synthetic sequences from structured sequential data.
+    \item Learned concept embeddings using skip-gram architecture with negative sampling to capture semantic relationships between features.
+    \item Applied the framework to generate synthetic sequences that preserve statistical properties while preventing re-identification.
+\end{itemize}
+
+\vspace{4pt}
+
+\noindent\textbf{Deep Q-Network for CartPole}
+\hfill
+\href{https://github.com/SaadARazzaq/dqn-cartpole-pytorch}{\underline{GitHub}}
+\begin{itemize}
+    \item Implemented DQN from scratch in PyTorch with experience replay and epsilon-greedy exploration to solve CartPole-v1.
+    \item Achieved convergence within 200--500 episodes, demonstrating stable learning through replay buffer and target network updates.
+\end{itemize}
+
+
+% ==================================================
+% FINAL YEAR PROJECT
+% ==================================================
+\section*{Final Year Project}
+
+\noindent\textbf{GynaeAutoCare -- Digital Healthcare Platform for Women's Health}
+\hfill
+\textit{FAST--NUCES}
+\begin{itemize}
+    \item Designed and developed a full-stack healthcare system using Django, PostgreSQL, Celery, and Django Channels.
+    \item Implemented electronic health records, telemedicine infrastructure, appointment scheduling, and clinical decision support.
+\end{itemize}
+
+
+% ==================================================
+% INDUSTRY EXPERIENCE
+% ==================================================
+\section*{Industry Experience}
+
+\entry
+{Software Developer (Full Stack)}
+{July 2024 -- Present}
+{ProActive Enterprises (Private) Limited}
+{Remote, Pakistan}
+
+\begin{itemize}
+    \item Developing full-stack applications across frontend, backend, and database layers; gained experience with production systems, authentication, and integration workflows.
+\end{itemize}
+
+\vspace{3pt}
+
+\entry
+{Teaching Assistant -- Data Science \& Business Analytics}
+{Aug 2023 -- Jun 2024}
+{FAST--NUCES, Chiniot--Faisalabad Campus}
+{Pakistan}
+
+\begin{itemize}
+\item Supported student learning in Python-based data analysis, machine learning, \& predictive modeling through tutorials, technical guidance, \& code reviews; helped students debug implementations \& develop high-quality solutions.
+\end{itemize}
+
+
+% ==================================================
+% TECHNICAL SKILLS
+% ==================================================
+\section*{Technical Skills}
+
+\noindent\textbf{ML Frameworks:}
+PyTorch, TensorFlow, Keras, Scikit-learn, XGBoost, LightGBM, ONNX Runtime, FastAI
+
+\noindent\textbf{Architectures:}
+CNNs, RNNs, LSTMs, DQN, VGG, FaceNet, Vision Transformers (ViT), Seq2Seq, RestNET
+
+\noindent\textbf{Techniques:}
+Optimization Algorithms, Model Quantization, Transfer Learning, Knowledge Distillation,
+Regularization
+
+\noindent\textbf{Languages:}
+Python, C, C++, R, SQL
+
+\noindent\textbf{Tools:}
+NumPy, Pandas, OpenCV, Git, Docker, PostgreSQL, FastAPI
+
+
+% ==================================================
+% CERTIFICATIONS
+% ==================================================
+\section*{Selected Certifications}
+
+\begin{itemize}
+    \item IBM -- AI Developer Professional Certificate, 2025
+    \item IBM -- Generative AI Engineering Professional Certificate, 2025
+    \item Google -- Advanced Data Analytics Professional Certificate, 2025
+\end{itemize}
+
+
+% ==================================================
+% KNOWLEDGE SHARING
+% ==================================================
+\section*{Knowledge Sharing}
+
+\noindent\textbf{Founder \& Author -- The Applied Engineer}
+\hfill
+\href{https://theappliedengineer.substack.com/}{Substack}
+
+\begin{itemize}
+    \item Publishing daily articles that demystify the mathematical foundations of machine learning like loss, gradients, backpropagation, and the training loop — for readers with zero prior knowledge.
+    \item Filling a gap in ML education by grounding every concept in practical, real-world examples and step-by-step reasoning, rather than abstract formulas or unexplained code.
+    \item Demonstrating deep understanding of model internals and training dynamics by translating mathematically rigorous concepts into accessible, intuitive explanations.
+\end{itemize}
+
+
+% ==================================================
+% LANGUAGES
+% ==================================================
+\section*{Languages}
+
+\noindent\textbf{English:} IELTS Academic 7.0 overall (no band below 6.5)
+\quad $\vert$ \quad
+\noindent\textbf{Urdu:} Native
+
+
+\end{document}
